@@ -76,6 +76,8 @@ UPDATE_PACKAGE() {
 #局域网唤醒
 #UPDATE_PACKAGE "viking" "ones20250/packages" "main" "" "luci-app-timewol luci-app-wolplus"
 #UPDATE_PACKAGE "vnt" "lmq8267/luci-app-vnt" "main"
+#雅典娜的led屏
+UPDATE_PACKAGE "athena-led" "unraveloop/JDC-AX6600-Athena-LED-Controller" "main"
 
 #更新软件包版本
 UPDATE_VERSION() {
@@ -120,4 +122,3 @@ UPDATE_VERSION() {
 
 #UPDATE_VERSION "软件包名" "测试版，true，可选，默认为否"
 #UPDATE_VERSION "sing-box"
-#UPDATE_VERSION "tailscale"
