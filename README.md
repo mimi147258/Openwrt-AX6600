@@ -84,6 +84,23 @@ OpenWrt / AX6600 / IPQ6010 / JDCloud RE-CS-02 / NSS / Router Firmware / Cloud Bu
 
 > 💡 Releases 中的文件名会包含 `pure` 或 `rich`，请按需求下载对应版本。
 
+### 文件命名与附件说明
+
+Releases 页面每个版本包含以下文件（PURE 与 RICH 分开发布，Release tag 中同样含版本字样）：
+
+| 文件 | 说明 |
+|------|------|
+| `源码作者-分支-pure/rich-wifi模式-设备型号-时间.bin` 等 | 固件本体；文件名带 `factory` 用于从原厂固件首次刷入，带 `sysupgrade` 用于 OpenWrt/ImmortalWrt 系统内升级 |
+| `Config-配置-版本-作者-分支-时间.txt` | 本次编译使用的完整 `.config`，便于复现构建或二次定制 |
+| `Packages-配置-版本-作者-分支-时间.txt` | 外部插件（PassWall / PassWall2 / OpenClash 及依赖 feed）的仓库、分支与 commit 记录，仅 `RICH` 丰富版生成，便于排查上游变更 |
+
+### 构建机制（PURE / RICH 如何隔离）
+
+- 两个版本由工作流参数 `WRT_PROFILE` 区分，所有丰富版逻辑（额外配置、feed、插件克隆）均由该条件隔离，**纯净版产物不受丰富版任何改动影响**。
+- 丰富版插件来源唯一：LuCI 插件本体由 `Scripts/Packages.sh` 克隆到 `package/`（优先级高于 feeds），依赖包（xray、sing-box 等）由 `passwall_packages` feed 提供，避免同名包双重定义。
+- 丰富版配置 `Config/GENERAL_AX6600_RICH.txt` 追加在通用配置之后，按 kconfig 规则覆盖纯净版关闭的选项（如 Docker 所需内核模块、`dnsmasq-full`）。
+- 编译缓存（ccache / 工具链）与版本无关，PURE 与 RICH 共享同一份，不额外占用缓存配额。
+
 ### 版本与验证建议
 
 - `PURE`：推荐作为日常稳定版，保持当前轻量配置。
@@ -98,8 +115,8 @@ OpenWrt / AX6600 / IPQ6010 / JDCloud RE-CS-02 / NSS / Router Firmware / Cloud Bu
 | 目录/文件 | 用途 | 说明 |
 |----------|------|------|
 | `.github/workflows/` | CI/CD 自动编译 | 定义 GitHub Actions 工作流，实现云端自动构建 |
-| `scripts/` | 编译脚本 | 包含编译前置处理、自定义配置等辅助脚本 |
-| `config/` | 编译配置 | 存放 OpenWrt `.config` 配置文件 |
+| `Scripts/` | 编译脚本 | 包含插件拉取、自定义设置等辅助脚本 |
+| `Config/` | 编译配置 | 存放 OpenWrt `.config` 配置文件（含 `GENERAL_AX6600_RICH.txt` 丰富版增量配置） |
 
 ---
 

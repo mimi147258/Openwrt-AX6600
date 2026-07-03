@@ -99,6 +99,11 @@ jobs:
             *) echo "Unsupported WRT_PROFILE: $WRT_PROFILE" >&2; exit 1 ;;
           esac
           echo "WRT_PROFILE=$WRT_PROFILE_UPPER" >> $GITHUB_ENV
+          if [[ "$WRT_PROFILE_UPPER" == "RICH" ]]; then
+            echo "WRT_PROFILE_DESC=丰富版，预装 Docker/Dockerman、PassWall/PassWall2、OpenClash、AdGuard Home，刷完即用" >> $GITHUB_ENV
+          else
+            echo "WRT_PROFILE_DESC=纯净版，轻量稳定，仅含基础网络与常用管理插件，扩展插件按需自行安装" >> $GITHUB_ENV
+          fi
           echo "WRT_INFO=${WRT_SOURCE%%/*}" >> $GITHUB_ENV
           echo "WRT_TARGET=$(grep -m 1 -oP '^CONFIG_TARGET_\K[\w]+(?=\=y)' ./Config/$WRT_CONFIG.txt)" >> $GITHUB_ENV
           echo "WRT_WIFI=wifi-yes" >> $GITHUB_ENV
@@ -290,6 +295,7 @@ jobs:
             源码仓库：${{ env.WRT_REPO }}
             编译分支：${{ env.WRT_BRANCH }}
             固件版本：${{ env.WRT_PROFILE }}
+            版本说明：${{ env.WRT_PROFILE_DESC }}
             提交版本：${{ env.WRT_HASH }}
             编译时间：${{ env.WRT_DATE }}
             ━━━━━━━━━━━━━━━━━━━━━━━
@@ -319,9 +325,12 @@ jobs:
             WiFi 名称：${{ env.WRT_SSID }}
             WiFi 密码：${{ env.WRT_WORD }}
             ━━━━━━━━━━━━━━━━━━━━━━━
-            📦 使用说明
-            - 请根据设备型号选择对应固件文件
-            - 不同文件适配不同刷机方式（factory / sysupgrade）
+            📥 下载与刷机说明
+            - 本 Release 为 ${{ env.WRT_PROFILE }} 版固件；PURE 纯净版与 RICH 丰富版分开发布，固件文件名中含 pure / rich 字样，下载前请确认
+            - 首次从原厂固件刷入：选文件名带 factory 的文件
+            - 已是 OpenWrt/ImmortalWrt 升级：选文件名带 sysupgrade 的文件
+            - Config-*.txt：本次编译的完整 .config 配置，便于复现或二次定制
+            - Packages-*.txt：外部插件（PassWall / OpenClash 等）的仓库、分支与 commit 记录，仅丰富版提供
 
             ⚠️ 风险提示
             刷机存在风险，请确认：
