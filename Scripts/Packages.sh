@@ -61,7 +61,7 @@ UPDATE_PACKAGE() {
 #UPDATE_PACKAGE "homeproxy" "ones20250/homeproxy" "master"
 #UPDATE_PACKAGE "momo" "nikkinikki-org/OpenWrt-momo" "main"
 #UPDATE_PACKAGE "nikki" "nikkinikki-org/OpenWrt-nikki" "main"
-if [[ "${WRT_PROFILE^^}" == "RICH" ]]; then
+if [[ "${WRT_PROFILE^^}" == "PLUS" ]]; then
 	# "*passwall*" 通配已包含 luci-app-passwall 目录，LuCI 入口随包一并提取，
 	# 依赖包（xray 等）由 passwall_packages feed 提供，避免同名包双重定义。
 	UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "master" "pkg"

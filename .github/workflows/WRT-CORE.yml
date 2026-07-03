@@ -95,12 +95,12 @@ jobs:
           echo "WRT_MARK=${GITHUB_REPOSITORY%%/*}" >> $GITHUB_ENV
           WRT_PROFILE_UPPER=$(echo "${WRT_PROFILE:-PURE}" | tr '[:lower:]' '[:upper:]')
           case "$WRT_PROFILE_UPPER" in
-            PURE|RICH) ;;
+            PURE|PLUS) ;;
             *) echo "Unsupported WRT_PROFILE: $WRT_PROFILE" >&2; exit 1 ;;
           esac
           echo "WRT_PROFILE=$WRT_PROFILE_UPPER" >> $GITHUB_ENV
-          if [[ "$WRT_PROFILE_UPPER" == "RICH" ]]; then
-            echo "WRT_PROFILE_DESC=丰富版，预装 Docker/Dockerman、PassWall/PassWall2、OpenClash、AdGuard Home，刷完即用" >> $GITHUB_ENV
+          if [[ "$WRT_PROFILE_UPPER" == "PLUS" ]]; then
+            echo "WRT_PROFILE_DESC=Plus 版，预装 Docker/Dockerman、PassWall/PassWall2、OpenClash、AdGuard Home，刷完即用" >> $GITHUB_ENV
           else
             echo "WRT_PROFILE_DESC=纯净版，轻量稳定，仅含基础网络与常用管理插件，扩展插件按需自行安装" >> $GITHUB_ENV
           fi
@@ -123,9 +123,9 @@ jobs:
             sed -i '/.cn\//d; /tencent/d; /aliyun/d' "$PROJECT_MIRRORS_FILE"
           fi
 
-          # 丰富版补充 PassWall 依赖包 feed（xray/sing-box 等）。
+          # Plus 版补充 PassWall 依赖包 feed（xray/sing-box 等）。
           # LuCI 插件本体由 Packages.sh 克隆到 package/，这里不再加 LuCI feed，避免同名包双重定义。
-          if [[ "$WRT_PROFILE" == "RICH" ]]; then
+          if [[ "$WRT_PROFILE" == "PLUS" ]]; then
             echo "src-git passwall_packages https://github.com/Openwrt-Passwall/openwrt-passwall-packages" >> feeds.conf.default
           fi
 
@@ -138,7 +138,7 @@ jobs:
         if: env.WRT_TEST != 'true'
         uses: actions/cache@v4
         with:
-          # 缓存内容（ccache/宿主工具/工具链）与 profile 无关，PURE 和 RICH 共享同一份，避免缓存翻倍挤占配额
+          # 缓存内容（ccache/宿主工具/工具链）与 profile 无关，PURE 和 PLUS 共享同一份，避免缓存翻倍挤占配额
           key: ${{env.WRT_CONFIG}}-${{env.WRT_INFO}}-${{env.WRT_HASH}}
           restore-keys: ${{env.WRT_CONFIG}}-${{env.WRT_INFO}}
           path: |
@@ -164,7 +164,7 @@ jobs:
           if ${{steps.check-cache.outputs.cache-hit != 'true'}}; then
             CACHE_LIST=$(gh cache list --key "$WRT_CONFIG-$WRT_INFO" | cut -f 1)
             for CACHE_KEY in $CACHE_LIST; do
-              # PURE/RICH 两个任务可能并发清理同一批缓存，删除失败（已被对方删掉）不视为错误
+              # PURE/PLUS 两个任务可能并发清理同一批缓存，删除失败（已被对方删掉）不视为错误
               gh cache delete $CACHE_KEY || true
             done
 
@@ -187,7 +187,7 @@ jobs:
 
           : > "$GITHUB_WORKSPACE/package-versions.txt"
           $GITHUB_WORKSPACE/Scripts/Packages.sh
-          if [[ "$WRT_PROFILE" == "RICH" && -e ../feeds/passwall_packages/.git ]]; then
+          if [[ "$WRT_PROFILE" == "PLUS" && -e ../feeds/passwall_packages/.git ]]; then
             echo "passwall_packages(feed) Openwrt-Passwall/openwrt-passwall-packages main $(git -C ../feeds/passwall_packages rev-parse --short HEAD)" >> "$GITHUB_WORKSPACE/package-versions.txt"
           fi
           if [ -s "$GITHUB_WORKSPACE/package-versions.txt" ]; then
@@ -326,11 +326,11 @@ jobs:
             WiFi 密码：${{ env.WRT_WORD }}
             ━━━━━━━━━━━━━━━━━━━━━━━
             📥 下载与刷机说明
-            - 本 Release 为 ${{ env.WRT_PROFILE }} 版固件；PURE 纯净版与 RICH 丰富版分开发布，固件文件名中含 pure / rich 字样，下载前请确认
+            - 本 Release 为 ${{ env.WRT_PROFILE }} 版固件；PURE 纯净版与 PLUS 版分开发布，固件文件名中含 pure / plus 字样，下载前请确认
             - 首次从原厂固件刷入：选文件名带 factory 的文件
             - 已是 OpenWrt/ImmortalWrt 升级：选文件名带 sysupgrade 的文件
             - Config-*.txt：本次编译的完整 .config 配置，便于复现或二次定制
-            - Packages-*.txt：外部插件（PassWall / OpenClash 等）的仓库、分支与 commit 记录，仅丰富版提供
+            - Packages-*.txt：外部插件（PassWall / OpenClash 等）的仓库、分支与 commit 记录，仅 PLUS 版提供
 
             ⚠️ 风险提示
             刷机存在风险，请确认：
