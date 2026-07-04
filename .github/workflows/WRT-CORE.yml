@@ -329,11 +329,11 @@ jobs:
             WiFi 密码：${{ env.WRT_WORD }}
             ━━━━━━━━━━━━━━━━━━━━━━━
             📥 下载与刷机说明
-            - 本 Release 为 ${{ env.WRT_PROFILE }} 版固件；PURE 纯净版与 PLUS 版分开发布，固件文件名中含 pure / plus 字样，下载前请确认
+            - 本 Release 为 ${{ env.WRT_PROFILE }} 版固件；两个版本分开发布，请从 README 下载入口按需选择
             - 首次从原厂固件刷入：选文件名带 factory 的文件
             - 已是 OpenWrt/ImmortalWrt 升级：选文件名带 sysupgrade 的文件
             - Config-*.txt：本次编译的完整 .config 配置，便于复现或二次定制
-            - Packages-*.txt：外部插件（PassWall / OpenClash 等）的仓库、分支与 commit 记录，仅 PLUS 版提供
+            - Packages-*.txt：外部插件（PassWall / OpenClash 等）的仓库、分支与 commit 记录（纯净版无外部插件，无此文件）
             - sha256sums.txt：固件校验文件，刷机前请先校验下载完整性（方法见 README 刷机前必读）
 
             ⚠️ 风险提示
