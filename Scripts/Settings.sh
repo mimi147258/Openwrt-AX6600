@@ -93,3 +93,5 @@ else
         echo "Memory patch: current value ($CURRENT_VAL) is sufficient, skipped."
     fi
 fi
+sed -i 's/6144k/12288k/g' target/linux/qualcommax/image/*.mk 2>/dev/null || true
+sudo apt-get update && sudo apt-get install -y dwarves
