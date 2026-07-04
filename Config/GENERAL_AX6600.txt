@@ -4,7 +4,7 @@
 CONFIG_PACKAGE_luci-app-autoreboot=y
 CONFIG_PACKAGE_luci-app-netspeedtest=n
 CONFIG_PACKAGE_luci-app-partexp=y
-CONFIG_PACKAGE_luci-app-samba4=y
+CONFIG_PACKAGE_luci-app-samba4=n
 #CONFIG_PACKAGE_luci-app-sqm=y
 #CONFIG_PACKAGE_sqm-scripts-nss=y
 CONFIG_PACKAGE_luci-app-wolplus=y
@@ -25,7 +25,7 @@ CONFIG_PACKAGE_luci-app-upnp=n
 
 #参数调整
 CONFIG_CCACHE=y
-CONFIG_DEVEL=n
+CONFIG_DEVEL=y
 CONFIG_KERNEL_CC_OPTIMIZE_FOR_PERFORMANCE=y
 #支持同一平台下的多个设备型号 我只生成一个固件
 CONFIG_TARGET_MULTI_PROFILE=y
@@ -100,7 +100,7 @@ CONFIG_PACKAGE_kmod-usb-storage-uas=y
 CONFIG_PACKAGE_kmod-usb-uhci=n
 CONFIG_PACKAGE_kmod-usb-xhci=y
 #不用 Docker / Podman → 可关
-CONFIG_PACKAGE_kmod-veth=n
+CONFIG_PACKAGE_kmod-veth=y
 CONFIG_PACKAGE_kmod-wireguard=y
 CONFIG_PACKAGE_kmod-mmc=y
 CONFIG_PACKAGE_kmod-sdhci=y
@@ -165,3 +165,18 @@ CONFIG_PACKAGE_luci-app-wireless-regdb=y
 #老优化，副作用大
 CONFIG_PACKAGE_skb_recycler=n
 
+CONFIG_PACKAGE_luci-app-openclash=y
+CONFIG_PACKAGE_luci-theme-argon=y
+CONFIG_PACKAGE_zram-swap=y
+CONFIG_PACKAGE_sshpass=y
+CONFIG_PACKAGE_coreutils-nohup=y
+CONFIG_PACKAGE_kmod-sched-bpf=y
+CONFIG_PACKAGE_kmod-xdp-sockets-diag=y
+CONFIG_KERNEL_CGROUPS=y
+CONFIG_KERNEL_CGROUP_BPF=y
+CONFIG_KERNEL_BPF_EVENTS=y
+CONFIG_BPF_TOOLCHAIN_HOST=y
+CONFIG_KERNEL_XDP_SOCKETS=y
+CONFIG_KERNEL_DEBUG_INFO=y
+CONFIG_KERNEL_DEBUG_INFO_REDUCED=n
+CONFIG_KERNEL_DEBUG_INFO_BTF=y
