@@ -21,9 +21,13 @@ OpenWrt / AX6600 / IPQ6010 / JDCloud RE-CS-02 / NSS / Router Firmware / Cloud Bu
 ## 📥 快速开始
 
 ### 1️⃣ 下载固件
-🎯 **[👉 点击下载最新固件](https://github.com/ones20250/Openwrt-AX6600/releases/latest)**
 
-所有编译产物都在 Releases 页面发布，选择最新版本下载。
+| 版本 | 下载入口 | 适合场景 |
+|------|----------|----------|
+| 🍃 `PURE` 纯净版 | 🎯 **[👉 下载最新 PURE 固件](https://github.com/ones20250/Openwrt-AX6600/releases?q=PURE&expanded=true)** | 轻量稳定，日常推荐，插件按需自装 |
+| 🚀 `PLUS` 版 | 🎯 **[👉 下载最新 PLUS 固件](https://github.com/ones20250/Openwrt-AX6600/releases?q=PLUS&expanded=true)** | Docker / PassWall / OpenClash / AdGuard Home 开箱即用 |
+
+> 💡 打开后列表**最上方**即为该版本最新固件；也可浏览 [全部 Releases](https://github.com/ones20250/Openwrt-AX6600/releases)。
 
 📦 **刷机相关文件（Bootloader / 工具 / 备用固件）**
 👉 **[点击下载刷机文件](https://github.com/ones20250/Openwrt-AX6600/releases/tag/Router-Flashing-Files)**
