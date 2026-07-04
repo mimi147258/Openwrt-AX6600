@@ -36,8 +36,10 @@ OpenWrt / AX6600 / IPQ6010 / JDCloud RE-CS-02 / NSS / Router Firmware / Cloud Bu
 
 > 💡 打开后列表**最上方**即为该版本最新固件；也可浏览 [全部 Releases](https://github.com/ones20250/Openwrt-AX6600/releases)。
 
-📦 **刷机相关文件（Bootloader / 工具 / 备用固件）**
+📦 **刷机救砖全家桶**
 👉 **[点击下载刷机文件](https://github.com/ones20250/Openwrt-AX6600/releases/tag/Router-Flashing-Files)**
+
+> 包含：不死 U-Boot（亚瑟/雅典娜通用）、双分区 GPT 分区表、原厂还原固件、USB 9008 救砖工具、TTL 接线图、图文刷机教程
 
 ---
 
