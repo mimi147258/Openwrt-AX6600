@@ -30,7 +30,7 @@ OpenWrt / AX6600 / IPQ6010 / JDCloud RE-CS-02 / NSS / Router Firmware / Cloud Bu
 | 版本 | 下载入口 | 适合场景 |
 |------|----------|----------|
 | 🍃 `PURE` 纯净版 | 🎯 **[👉 下载最新 PURE 固件](https://github.com/ones20250/Openwrt-AX6600/releases?q=PURE&expanded=true)** | 轻量稳定，日常推荐，插件按需自装 |
-| 🚀 `PLUS` 版 | 🎯 **[👉 下载最新 PLUS 固件](https://github.com/ones20250/Openwrt-AX6600/releases?q=PLUS&expanded=true)** | Docker / PassWall / OpenClash / AdGuard Home 开箱即用 |
+| 🚀 `PLUS` 版 | 🎯 **[👉 下载最新 PLUS 固件](https://github.com/ones20250/Openwrt-AX6600/releases?q=PLUS&expanded=true)** | OpenClash / PassWall2 / Docker / AdGuard Home 开箱即用 |
 
 > ⭐ 固件对你有用的话，顺手点个 Star —— 这是对持续维护最好的支持！
 
@@ -50,7 +50,7 @@ OpenWrt / AX6600 / IPQ6010 / JDCloud RE-CS-02 / NSS / Router Firmware / Cloud Bu
 | **编译时间** | 显示的时间为编译开始时间，用于对应上游源码版本 |
 | **版本划分** | 默认同时构建 `PURE` 纯净版与 `PLUS` 版 |
 | **基础功能** | 纯净版保持当前轻量配置，包含完整网络功能栈 |
-| **扩展插件** | Plus 版额外集成 Docker / Dockerman、PassWall / PassWall2、OpenClash、AdGuard Home 等常用组件，也可通过自定义配置 `.config` 文件增加插件 |
+| **扩展插件** | Plus 版额外集成 OpenClash、PassWall2、Docker / Dockerman、AdGuard Home、DDNS、ttyd 终端、UPnP 等常用组件，也可通过自定义配置 `.config` 文件增加插件 |
 | **硬件平台** | 基于 QUALCOMMAX（IPQ6010）架构 |
 | **性能优化** | 针对 IPQ6010 平台进行网络性能调优 |
 
@@ -59,7 +59,7 @@ OpenWrt / AX6600 / IPQ6010 / JDCloud RE-CS-02 / NSS / Router Firmware / Cloud Bu
 | 版本 | 适合人群 | 预置内容 |
 |------|----------|----------|
 | `PURE` 纯净版 | 希望系统轻量、稳定，按需自行安装插件的用户 | 保持当前配置，预装基础网络与常用管理插件 |
-| `PLUS` 版 | 希望刷完即用常见扩展服务的用户 | 在纯净版基础上增加 Docker / Dockerman、PassWall / PassWall2、OpenClash、AdGuard Home，以及分区扩容（partexp）、网络唤醒（wolplus）等实用插件 |
+| `PLUS` 版 | 希望刷完即用常见扩展服务的用户 | 在纯净版基础上增加 OpenClash、PassWall2、Docker / Dockerman、AdGuard Home、DDNS、ttyd 终端、UPnP，以及分区扩容（partexp）、网络唤醒（wolplus）等实用插件 |
 
 > 💡 Releases 中的文件名会包含 `pure` 或 `plus`，请按需求下载对应版本。
 
@@ -71,7 +71,7 @@ Releases 页面每个版本包含以下文件（PURE 与 PLUS 分开发布，Rel
 |------|------|
 | `源码作者-分支-pure/plus-设备型号-时间.bin` 等 | 固件本体；文件名带 `factory` 用于从原厂固件首次刷入，带 `sysupgrade` 用于 OpenWrt/ImmortalWrt 系统内升级 |
 | `Config-配置-版本-作者-分支-时间.txt` | 本次编译使用的完整 `.config`，便于复现构建或二次定制 |
-| `Packages-配置-版本-作者-分支-时间.txt` | 外部插件（PassWall / PassWall2 / OpenClash 及依赖 feed）的仓库、分支与 commit 记录，仅 `PLUS` 版生成，便于排查上游变更 |
+| `Packages-配置-版本-作者-分支-时间.txt` | 外部插件（OpenClash / PassWall2 及依赖 feed）的仓库、分支与 commit 记录，仅 `PLUS` 版生成，便于排查上游变更 |
 
 ---
 
@@ -163,11 +163,17 @@ Releases 页面每个版本包含以下文件（PURE 与 PLUS 分开发布，Rel
 ### 版本与验证建议
 
 - `PURE`：推荐作为日常稳定版，保持当前轻量配置。
-- `PLUS`：Plus 版会额外集成 Docker / Dockerman、PassWall / PassWall2、OpenClash、AdGuard Home，固件体积和运行资源占用都会明显高于纯净版。
+- `PLUS`：Plus 版会额外集成 OpenClash、PassWall2、Docker / Dockerman、AdGuard Home、DDNS、ttyd、UPnP 等，固件体积和运行资源占用都会明显高于纯净版。
 - 手动测试时可在 `WRT-TEST` 工作流选择 `PROFILE=PURE` 或 `PROFILE=PLUS`；建议 Plus 版发布前至少先用 `TEST=true` 生成最终 `.config`，再用完整编译确认上游插件依赖没有变化。
-- Release 会额外上传 `Packages-*.txt` 记录 Plus 版外部插件仓库、分支和 commit，方便排查 OpenClash / PassWall / PassWall2 上游变更导致的编译问题。
+- Release 会额外上传 `Packages-*.txt` 记录 Plus 版外部插件仓库、分支和 commit，方便排查 OpenClash / PassWall2 上游变更导致的编译问题。
 
 > ⚠️ Plus 版依赖外部插件仓库和上游 feeds，若上游调整包名或依赖，可能需要同步更新 `Config/GENERAL_AX6600_PLUS.txt`。
+
+### PLUS 版使用提示
+
+- **AdGuard Home 首次启用**：出厂默认关闭。启用服务后访问 `http://路由器IP:3000` 完成安装向导，向导中 **DNS 监听端口请填 `5553`**（`53` 已被系统 dnsmasq 占用，填 53 会报错）；完成后在 LuCI「网络 → DHCP/DNS」的「DNS 转发」中填入 `127.0.0.1#5553` 并勾选「忽略解析文件」，广告过滤即对全局生效。
+- **代理插件二选一**：OpenClash 与 PassWall2 工作机制相同（接管 DNS + 透明代理规则），同时启用会互相抢占，轻则其中一个失效、分流错乱，重则断网，请只启用其中一个，切换前先停用当前插件。
+- **Docker 存储去向**：Docker 数据默认写入系统分区，容易撑爆。建议先用「分区扩容（partexp）」将空闲 eMMC 挂载为独立分区，再在 Docker 设置中把存储路径指向该分区。
 
 ## 📂 项目结构
 
